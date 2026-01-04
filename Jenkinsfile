@@ -36,9 +36,6 @@ pipeline{
             }
         }
         stage('code-scanning sonarQube'){
-            // tools {
-            //     sonar 'sonar-8.0'
-            // }
             // environment{
             //     def scannerHome = tool 'sonar-8.0' //give tool name configured in jenkins
             // }
@@ -46,10 +43,18 @@ pipeline{
                 echo 'code scanning to be added'
             //    withSonarQubeEnv('SonarQube-Server-Name') {
             //     //sh '${scannerHome}/bin/sonar-scanner '
-            //     // sh 'mvn clean package sonar:sonar'    
             //     }
 
             }
+        }
+        stage('Quality Gate'){
+            steps{
+                echo 'quality gate to be added'
+            //     timeout(time: 1, unit: 'HOURS') {
+                   // waitForQualityGate abortPipeline: true // Reuse taskId previously collected by withSonarQubeEnv
+              
+         //   }
+
         }
         stage('build image'){
             steps{
