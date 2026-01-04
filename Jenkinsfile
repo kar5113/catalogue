@@ -44,10 +44,10 @@ pipeline{
             // }
             steps{
                 echo 'code scanning to be added'
-               withSonarQubeEnv('SonarQube-Server-Name') {
-                //sh '${scannerHome}/bin/sonar-scanner '
-                // sh 'mvn clean package sonar:sonar'    
-                }
+            //    withSonarQubeEnv('SonarQube-Server-Name') {
+            //     //sh '${scannerHome}/bin/sonar-scanner '
+            //     // sh 'mvn clean package sonar:sonar'    
+            //     }
 
             }
         }
