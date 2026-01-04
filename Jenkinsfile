@@ -38,7 +38,7 @@ pipeline{
                         && docker build -t ${project_name}/${component}:${app_version} . \
                         && docker tag ${project_name}/${component}:${app_version} ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project_name}/${component}:${app_version} \
                         && docker push ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project_name}/${component}:${app_version}"
-                    }
+                    } 
                     // sh "docker build -t catalogue:${app_version} . \
                     //     && docker ps -a && docker images"
 
