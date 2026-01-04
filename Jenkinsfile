@@ -39,9 +39,9 @@ pipeline{
             // tools {
             //     sonar 'sonar-8.0'
             // }
-            environment{
-                def scannerHome = tool 'sonar-8.0' //give tool name configured in jenkins
-            }
+            // environment{
+            //     def scannerHome = tool 'sonar-8.0' //give tool name configured in jenkins
+            // }
             steps{
                 echo 'code scanning to be added'
                withSonarQubeEnv('SonarQube-Server-Name') {
