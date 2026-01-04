@@ -30,7 +30,7 @@ pipeline{
             steps{
                 script{
                     sh "docker build -t catalogue:${app_version} . \
-                        && docker ps -a && docker images --format"
+                        && docker ps -a && docker images"
 
                 }
             }
