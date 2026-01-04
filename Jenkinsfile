@@ -16,7 +16,7 @@ pipeline{
     }
 
     stages{
-        stage('build'){
+        stage('Read version'){
             steps{
                 script{
                 def packageJSON = readJSON file: 'package.json'
@@ -28,6 +28,27 @@ pipeline{
         stage('install dependencies'){
             steps{
                 sh 'npm install'
+            }
+        }
+        stage('test application'){
+            steps{
+                sh 'npm test'
+            }
+        }
+        stage('code-scanning sonarQube'){
+            // tools {
+            //     sonar 'sonar-8.0'
+            // }
+            environment{
+                def scannerHome = tool 'sonar-8.0' //give tool name configured in jenkins
+            }
+            steps{
+                echo 'code scanning to be added'
+               withSonarQubeEnv('SonarQube-Server-Name') {
+                //sh '${scannerHome}/bin/sonar-scanner '
+                // sh 'mvn clean package sonar:sonar'    
+                }
+
             }
         }
         stage('build image'){
