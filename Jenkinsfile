@@ -130,6 +130,28 @@ pipeline{
                 }
             }
         }
+
+        stage("Trivy scan"){
+            steps{
+                script{
+                    echo "Starting trivy scan"
+
+                    sh "trivy image \
+                    --scanners vuln \
+                    --severity HIGH,CRITICAL,MEDIUM \
+                    --exit-code 1 \
+                    --no-progress \
+                    --format table \
+                    --skip-db-update \
+                    --pkg-types os \
+                    ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project_name}/${component}:${env.app_version}"
+
+                    echo "Trivy scan completed successfully with no HIGH or CRITICAL vulnerabilities."
+                        
+                    
+                }
+            }
+        }
     }
 
 
