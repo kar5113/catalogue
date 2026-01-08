@@ -28,6 +28,7 @@ pipeline{
         stage('install dependencies'){
             steps{
                 sh 'npm install'
+                //sh 'npm install --include=dev'
             }
         }
         stage('test application'){
@@ -51,12 +52,64 @@ pipeline{
             steps{
                 echo 'quality gate to be added'
             //     timeout(time: 1, unit: 'HOURS') {
-                   // waitForQualityGate abortPipeline: true // Reuse taskId previously collected by withSonarQubeEnv
+                   // waitForQualityGate abortPipeline: true
               
          //   }
 
         }
         }
+
+        stage('Depandabot Scan'){
+            environment{
+                GITHUB_TOKEN = credentials('GitHub-PAT')
+                GITHUB_OWNER = "kar5113"
+                GITHUB_REPO = "catalogue"
+
+
+            }
+            steps{
+                script{
+                     /* Use sh """ when you want to use Groovy variables inside the shell.
+                    Use sh ''' when you want the script to be treated as pure shell. */
+                    sh '''
+                        echo "Depandabot scan started"
+                        echo "Fetching depandabot results"
+                        # Commands to trigger depandabot scan
+                        response = $(curl -s \
+                        -H "Accept: application/vnd.github+json" \
+                        -H "Authorization: token ${GITHUB_TOKEN}"\
+                         "https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/dependabot/alerts" 
+                        )
+                        echo "$response"
+                        echo "$response" > dependabot_results.json
+                        # Further processing of response can be done here
+                         high_critical_open_count=$(echo "${response}" | jq '[.[] 
+                        | select(
+                            .state == "open"
+                            and (.security_advisory.severity == "high"
+                                or .security_advisory.severity == "critical")
+                        )
+                    ] | length')
+                        echo "High and Critical severity issues count: $high_critical_open_count"
+                        if [ "$high_critical_open_count" -gt 0 ]; then
+                            echo "High or Critical severity vulnerabilities found. Failing the build."
+                            echo "Affected dependencies:"
+                        echo "$response" | jq '.[] 
+                        | select(.state=="open" 
+                        and (.security_advisory.severity=="high" 
+                        or .security_advisory.severity=="critical"))
+                        | {dependency: .dependency.package.name, severity: .security_advisory.severity, advisory: .security_advisory.summary}'
+                            exit 1
+                        else
+                            echo "No High or Critical severity vulnerabilities found."
+                        fi
+                        echo "Depandabot scan completed"
+                    '''
+                }
+
+            }
+        }
+
         stage('build image'){
             steps{
                 script{
