@@ -113,7 +113,6 @@ pipeline{
                         echo "Depandabot scan completed"
                     '''
                 }
-
             }
         }
 
@@ -128,7 +127,6 @@ pipeline{
                     } 
                     // sh "docker build -t catalogue:${app_version} . \
                     //     && docker ps -a && docker images"
-
                 }
             }
         }
