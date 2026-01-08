@@ -142,7 +142,7 @@ pipeline{
                     --exit-code 1 \
                     --no-progress \
                     --format table \
-                    --skip-db-update \
+                   // --skip-db-update \
                     --pkg-types os \
                     ${account_id}.dkr.ecr.us-east-1.amazonaws.com/${project_name}/${component}:${env.app_version}"
 
