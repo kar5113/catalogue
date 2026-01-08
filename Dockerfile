@@ -20,12 +20,12 @@
 # CMD ["node","server.js"]
 
 
-FROM node:20.19.6-alpine3.21 AS build
+FROM node:20.19.6-alpine3.23 AS build
 WORKDIR /opt/server
 COPY package.json .
 RUN npm install
 
-FROM node:20.19.6-alpine3.21
+FROM node:20.19.6-alpine3.23
 LABEL project="roboshop" \
       component="catalogue" \
       version="2.0"   
