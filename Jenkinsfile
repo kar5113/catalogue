@@ -7,7 +7,6 @@ pipeline{
     environment{
         app_version = ""
         aws_credentials = credentials('aws-credentials')
-        
         account_id="842747763415"
         project_name="roboshop"
         component="catalogue"
@@ -22,7 +21,7 @@ pipeline{
                 script{
                 def packageJSON = readJSON file: 'package.json'
                 echo "The version is ${packageJSON.version}"
-                app_version = packageJSON.version
+                def app_version = packageJSON.version
                 }
             }
         }
