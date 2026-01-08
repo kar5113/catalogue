@@ -22,12 +22,14 @@ pipeline{
                 def packageJSON = readJSON file: 'package.json'
                 echo "The version is ${packageJSON.version}"
                 def app_version = packageJSON.version
+                echo "The version is ${app_version}"
                 }
             }
         }
         stage('install dependencies'){
             steps{
                 sh 'npm install'
+                echo "The version is ${app_version}"
             }
         }
         stage('test application'){
@@ -60,6 +62,7 @@ pipeline{
         stage('build image'){
             steps{
                 script{
+                    echo "The version is ${app_version}"
                     withAWS(region:'us-east-1',credentials:'aws-credentials') {
                         sh "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${account_id}.dkr.ecr.us-east-1.amazonaws.com \
                         && docker build -t ${project_name}/${component}:${app_version} . \
