@@ -5,7 +5,7 @@ pipeline{
         }
     }
     environment{
-        app_version = ""
+        // app_version will be set dynamically in the pipeline
         aws_credentials = credentials('aws-credentials')
         account_id="842747763415"
         project_name="roboshop"
