@@ -82,6 +82,7 @@ pipeline{
                         )
                         echo "$response"
                         echo "$response" > dependabot_results.json
+                        cat dependabot_results.json 
                         # Further processing of response can be done here
                          high_critical_open_count=$(echo "${response}" | jq '[.[] 
                         | select(
