@@ -7,6 +7,7 @@ pipeline{
     environment{
         app_version = ""
         aws_credentials = credentials('aws-credentials')
+        
         account_id="842747763415"
         project_name="roboshop"
         component="catalogue"
