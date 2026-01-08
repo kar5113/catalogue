@@ -64,6 +64,7 @@ pipeline{
                 GITHUB_TOKEN = credentials('GitHub-PAT')
                 GITHUB_OWNER = "kar5113"
                 GITHUB_REPO = "catalogue"
+                GITHUB_API = "https://api.github.com"
 
 
             }
@@ -80,9 +81,7 @@ pipeline{
                         -H "Authorization: token ${GITHUB_TOKEN}"\
                          "https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/dependabot/alerts" 
                         )
-                        echo "${response}"
-                        echo "${response}" > dependabot_results.json
-                        cat dependabot_results.json 
+                        
                         # Further processing of response can be done here
                          high_critical_open_count=$(echo "${response}" | jq '[.[] 
                         | select(
