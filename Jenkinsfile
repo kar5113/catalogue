@@ -61,7 +61,7 @@ pipeline{
 
         stage('Depandabot Scan'){
             environment{
-                GITHUB_TOKEN = credentials('GitHub-PAT')
+                GITHUB_TOKEN = credentials('github-pat')
                 GITHUB_OWNER = "kar5113"
                 GITHUB_REPO = "catalogue"
                 GITHUB_API = "https://api.github.com"
